@@ -20,6 +20,8 @@ from blog.views import *
 from blog.feeds import RssSiteNewsFeed, AtomSiteNewsFeed
 from django.contrib.sitemaps.views import sitemap
 from blog.sitemap import BlogSitemap
+from July import settings
+from django.views.static import serve
 
 sitemaps = {
     'static': BlogSitemap,
@@ -37,6 +39,8 @@ urlpatterns = [
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^password/$', PasswordView.as_view(), name='password'),
     url(r'^rest_password/$', RestPasswordView.as_view(), name='restpassword'),
+    #=========== Images ========
+    url(r'^media/(?P<path>.*)$',serve,{"document_root":settings.MEDIA_ROOT}),
     # ========== Admin =========
     url(r'^admin/', include('admin.urls', namespace='admin')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
